@@ -141,7 +141,7 @@ andEithersTests = "andEithers" ~: TestList
 
 forTests = "for" ~: TestList
   [ "passes an empty list through" ~:
-    ([] @=?) =<< sequence (for [] $ const $ assertFailure "Nope.")
+    ([] @=?) =<< sequence (for [] $ const $ (assertFailure "Nope." :: IO ()))
 
   , "operates on each element of a list" ~:
     [2, 2, 4, 6, 10] @=? for [1, 1, 2, 3, 5] (* 2)
