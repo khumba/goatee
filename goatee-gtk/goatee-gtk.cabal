@@ -92,5 +92,4 @@ test-suite test-goatee-gtk
     other-modules:
         Game.Goatee.Ui.Gtk.CommonTest
         Game.Goatee.Ui.Gtk.LatchTest
-        Test
     type: exitcode-stdio-1.0
