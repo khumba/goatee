@@ -54,6 +54,7 @@ import Data.Maybe (catMaybes)
 #if !MIN_VERSION_base(4,8,0)
 import Data.Monoid (Monoid, mappend, mconcat, mempty)
 #endif
+import Data.Semigroup as Sem ((<>), Semigroup)
 import qualified Game.Goatee.Common.Bigfloat as BF
 import Game.Goatee.Lib.Types
 import Text.ParserCombinators.Parsec (
@@ -73,12 +74,15 @@ import Text.ParserCombinators.Parsec (
 -- between two @CoordList@s.
 newtype CoordListMonoid = CoordListMonoid { runCoordListMonoid :: CoordList }
 
+instance Sem.Semigroup CoordListMonoid where
+  (<>) (CoordListMonoid x) (CoordListMonoid y) =
+    CoordListMonoid $ coords' (coordListSingles x ++ coordListSingles y)
+                              (coordListRects x ++ coordListRects y)
+
 instance Monoid CoordListMonoid where
   mempty = CoordListMonoid emptyCoordList
 
-  mappend (CoordListMonoid x) (CoordListMonoid y) =
-    CoordListMonoid $ coords' (coordListSingles x ++ coordListSingles y)
-                              (coordListRects x ++ coordListRects y)
+  mappend = (<>)
 
 single :: Parser a -> Parser a
 single valueParser = char '[' *> valueParser <* char ']'
