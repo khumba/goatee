@@ -88,5 +88,4 @@ test-suite test-goatee
         Game.Goatee.Lib.TreeTest
         Game.Goatee.Lib.TypesTest
         Game.Goatee.Test.Common
-        Test
     type: exitcode-stdio-1.0
